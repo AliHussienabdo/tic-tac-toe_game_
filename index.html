@@ -11,11 +11,35 @@
     <!-- <header>Tic-Tac-Toe</header> -->
     <div class="start">
         <h1>Tic-Tac-Toe</h1>
-        <button class="btn-start btn">start</button>
+        <div class="player-input">
+            <input type="text"  placeholder="player : 1" value="player One" class="player1-name">
+            <p class="vs">VS.</p>
+            <input type="text" placeholder="player : 2" value="player Two" class="player2-name">
+        </div>
+        
+        <button class="btn-start">start</button>
     </div>
     <!-- <footer>made by ali</footer> -->
 
+    <div class="game-board">
+        <div class="game-info"></div>
+        <div class="board">
+            <div class="grid-buttons">
+                <button class="btn" data-btn="1"></button>
+                <button class="btn" data-btn="2"></button>
+                <button class="btn" data-btn="3"></button>
+                <button class="btn" data-btn="4"></button>
+                <button class="btn" data-btn="5"></button>
+                <button class="btn" data-btn="6"></button>
+                <button class="btn" data-btn="7"></button>
+                <button class="btn" data-btn="8"></button>
+                <button class="btn" data-btn="9"></button>
+            </div>
+        </div>
+        
+    </div>
 
+    <script src="script.js"></script>
     
 </body>
 </html>
