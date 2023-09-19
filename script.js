@@ -42,11 +42,14 @@ function Cell(){
 }
 
 
-function gameController(PlayerOne = "Plyer One", PlayerTwo = "Plyer Two"){
-
+function gameController(PlayerOne, PlayerTwo){
     const board = GameBoard();
+    const reset = () => {
+        board.restart();
+        activePlayer = player[0];
+    }
 
-    const player = [
+    let player = [
         {
             name: PlayerOne, 
             token: 1
@@ -56,6 +59,7 @@ function gameController(PlayerOne = "Plyer One", PlayerTwo = "Plyer Two"){
             token: 2
         }
     ];
+
 
     let activePlayer = player[0];
 
@@ -82,7 +86,6 @@ function gameController(PlayerOne = "Plyer One", PlayerTwo = "Plyer Two"){
         //check all the rows
         for(let i=0; i<9; i+=3){
             if(board.getBoard()[i].getValue() == board.getBoard()[i+1].getValue() && board.getBoard()[i+1].getValue() == board.getBoard()[i+2].getValue()  && board.getBoard()[i+1].getValue() != 0){
-                board.restart();
                 return [true, `${TheWinner.name}  is the Winner`];
             }
         } // checks all the columns
@@ -107,7 +110,7 @@ function gameController(PlayerOne = "Plyer One", PlayerTwo = "Plyer Two"){
         return [true, `it's a draw`];
     }
 
-    return {playRound,getActivePlayer,anyBodyWins,GameINFO};
+    return {playRound,getActivePlayer,anyBodyWins,GameINFO,reset};
 
 }
 
@@ -120,14 +123,16 @@ function ScreenController(){
     const player1Name = document.querySelector('.player1-name');
     const player2Name = document.querySelector('.player2-name');
 
-    if(player1Name.value == "" || player2Name.value == "" || player1Name.value == player2Name.value){
+    const PlayerOneName = player1Name.value;
+    const PlayerTwoName = player2Name.value;
+
+    if(PlayerOneName == "" || PlayerTwoName == "" || PlayerOneName == PlayerTwoName){
         TheGameBoardDiv.classList.remove('active');
         return;
     }
 
-    const game = gameController(player1Name.value, player2Name.value);
-
-    gameINFO.textContent = game.GameINFO();
+    const game = new gameController();
+    gameINFO.textContent = game.GameINFO(PlayerOneName,PlayerTwoName);
 
     TheClickedCell.forEach(CellClick => {
         CellClick.addEventListener('click',()=>{
@@ -163,16 +168,18 @@ function ScreenController(){
             TheGameBoardDiv.classList.remove('active');
             gameINFO.classList.remove('active');
             TheBoard.classList.remove('disapper');
+            restartBtn.remove();
             ClearButtonsValues();
+            location.reload();
 
         });
     }
 
     function ClearButtonsValues(){
+        game.reset();
         TheClickedCell.forEach(Clicked => {
             Clicked.innerHTML = "";
         });
-
     }
 }
 
@@ -181,5 +188,5 @@ const TheGameBoardDiv = document.querySelector('.game-board');
 
 startButton.addEventListener('click',()=>{
     TheGameBoardDiv.classList.add('active');
-    ScreenController();
+    new ScreenController();
 });
