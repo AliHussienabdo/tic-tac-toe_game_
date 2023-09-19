@@ -131,8 +131,8 @@ function ScreenController(){
         return;
     }
 
-    const game = new gameController();
-    gameINFO.textContent = game.GameINFO(PlayerOneName,PlayerTwoName);
+    const game = new gameController(PlayerOneName, PlayerTwoName);
+    gameINFO.textContent = game.GameINFO();
 
     TheClickedCell.forEach(CellClick => {
         CellClick.addEventListener('click',()=>{
